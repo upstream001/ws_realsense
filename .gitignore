@@ -1,0 +1,8 @@
+install/
+docs/
+log/
+scripts/
+build/
+captured_images/
+__pycache__/
+.marscode/
