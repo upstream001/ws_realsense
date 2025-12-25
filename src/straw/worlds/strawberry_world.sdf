@@ -54,7 +54,7 @@
         <model name="ground_plane">
             <static>true</static>
             <!-- 地面的位置 -->
-            <pose>0 0 -5.0 0 0 0</pose> 
+            <pose>0 0 -5.0 0 0 0</pose>
             <link name="link">
                 <collision name="collision">
                     <geometry>
@@ -100,7 +100,7 @@
                     <geometry>
                         <mesh>
                             <uri>
-                                file:///home/tianqi/ws_realsense/src/straw/models/strawberry/meshes/strawberry.dae</uri>
+                                file:///home/tianqi/ws_realsense/src/straw/models/strawberry/meshes/2025.12.25.dae</uri>
                             <scale>1 1 1</scale>
                         </mesh>
                     </geometry>
@@ -109,7 +109,7 @@
                     <geometry>
                         <mesh>
                             <uri>
-                                file:///home/tianqi/ws_realsense/src/straw/models/strawberry/meshes/strawberry.dae</uri>
+                                file:///home/tianqi/ws_realsense/src/straw/models/strawberry/meshes/2025.12.25.dae</uri>
                             <scale>1 1 1</scale>
                         </mesh>
                     </geometry>
@@ -120,7 +120,7 @@
         <!-- Realsense D405 Camera -->
         <model name="realsense_d405">
             <static>true</static>
-            <pose>0.3 0 0.1 0 0 3.14159</pose>
+            <pose>3 0 0.1 0 0 3.14159</pose>
             <link name="camera_link">
                 <inertial>
                     <mass>0.072</mass>
@@ -143,7 +143,7 @@
                 <visual name="camera_visual">
                     <geometry>
                         <box>
-                            <size>0.042 0.042 0.023</size>
+                            <size>0.84 0.84 0.46</size>
                         </box>
                     </geometry>
                     <material>

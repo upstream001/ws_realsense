@@ -4,14 +4,15 @@ import os
 
 # 1. 加载 npy 深度文件
 # 注意：这里使用的是您刚才生成的最新文件，如果文件名变了请手动更新
-depth_path = '/home/tianqi/ws_realsense/captured_images/depth_20251221_020934.npy'
-rgb_path = '/home/tianqi/ws_realsense/captured_images/rgb_20251221_020934.jpg'
+depth_path = "/home/tianqi/ws_realsense/captured_images/rgb_20251225_161918.npy"
+rgb_path = "/home/tianqi/ws_realsense/captured_images/rgb_20251225_161918.jpg"
 
 if not os.path.exists(depth_path):
     print(f"错误: 找不到文件 {depth_path}")
     # 尝试查找目录下最新的文件
     import glob
-    list_of_files = glob.glob('/home/tianqi/ws_realsense/captured_images/*.npy') 
+
+    list_of_files = glob.glob("/home/tianqi/ws_realsense/captured_images/*.npy")
     if list_of_files:
         depth_path = max(list_of_files, key=os.path.getctime)
         print(f"自动使用最新的深度文件: {depth_path}")
@@ -23,8 +24,7 @@ depth_data = np.load(depth_path)
 # 2. 配置相机内参 (fx, fy, cx, cy)
 # 对应 Gazebo 仿真中的 1280x720 分辨率设置
 intrinsic = o3d.camera.PinholeCameraIntrinsic(
-    width=1280, height=720, 
-    fx=976.736, fy=976.736, cx=640.0, cy=360.0
+    width=1280, height=720, fx=976.736, fy=976.736, cx=640.0, cy=360.0
 )
 
 # 3. 将深度图转换为点云
@@ -39,11 +39,14 @@ pcd = o3d.geometry.PointCloud.create_from_depth_image(
 if os.path.exists(rgb_path):
     rgb_data = o3d.io.read_image(rgb_path)
     rgbd = o3d.geometry.RGBDImage.create_from_color_and_depth(
-        rgb_data, depth_o3d, depth_scale=1.0, depth_trunc=3.0, convert_rgb_to_intensity=False
+        rgb_data,
+        depth_o3d,
+        depth_scale=1.0,
+        depth_trunc=3.0,
+        convert_rgb_to_intensity=False,
     )
     pcd = o3d.geometry.PointCloud.create_from_rgbd_image(rgbd, intrinsic)
     print(f"已加载 RGB 图像用于着色")
-
 
 
 # # 4. 点云滤波 (剔除离群点)
@@ -52,11 +55,11 @@ if os.path.exists(rgb_path):
 # pcd, ind = pcd.remove_radius_outlier(nb_points=16, radius=0.01)
 # pcd = pcd.select_by_index(ind)
 
-# 如果您的意思是只保留深度范围在 1cm 以内的点（例如只看物体表面）：
-points = np.asarray(pcd.points)
-if len(points) > 0:
-    min_z = np.min(points[:, 2])
-    pcd = pcd.select_by_index(np.where(points[:, 2] < min_z + 0.013)[0])
+# # 如果您的意思是只保留深度范围在 1cm 以内的点（例如只看物体表面）：
+# points = np.asarray(pcd.points)
+# if len(points) > 0:
+#     min_z = np.min(points[:, 2])
+#     pcd = pcd.select_by_index(np.where(points[:, 2] < min_z + 0.013)[0])
 
 # 5. 下采样到 500 个点
 if len(pcd.points) > 500:
@@ -71,6 +74,35 @@ if len(points) > 0:
     # Z轴为深度值 (单位: 米 -> 厘米)
     avg_depth = np.mean(points[:, 2]) * 100
     print(f"过滤后点数: {len(pcd.points)}，平均深度值: {avg_depth:.2f} cm")
+
+    # 计算点云中两点之间的最远距离
+    # 使用计算所有点对之间距离的方法，但为避免性能问题，如果点数过多则采样
+    if len(points) > 1000:
+        # 如果点数过多，随机采样1000个点进行计算
+        indices = np.random.choice(len(points), 1000, replace=False)
+        sampled_points = points[indices]
+    else:
+        sampled_points = points
+
+    # 计算最远点对距离
+    max_distance = 0
+    max_pair = None
+    for i in range(len(sampled_points)):
+        for j in range(i + 1, len(sampled_points)):
+            dist = np.linalg.norm(sampled_points[i] - sampled_points[j])
+            if dist > max_distance:
+                max_distance = dist
+                if len(sampled_points) == len(points):
+                    max_pair = (i, j)  # 记录原始索引
+                else:
+                    # 如果是采样的点，则不能记录原始索引
+                    max_pair = ("采样点", "采样点")
+
+    print(f"点云中两点之间的最远距离: {max_distance:.2f} cm")
+    if max_pair != ("采样点", "采样点"):
+        print(
+            f"最远点对坐标: 点{max_pair[0]} {points[max_pair[0]]} 和 点{max_pair[1]} {points[max_pair[1]]}"
+        )
 else:
     print("警告: 滤波后点云为空")
 

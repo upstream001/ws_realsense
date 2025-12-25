@@ -9,6 +9,7 @@
 
   <depend>rclpy</depend>
   <depend>std_msgs</depend>
+  <depend>gazebo_msgs</depend>
   <depend>ros_ign_gazebo</depend>
   <depend>realsense2_description</depend>
 

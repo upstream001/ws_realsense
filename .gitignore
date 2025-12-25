@@ -6,3 +6,5 @@ build/
 captured_images/
 __pycache__/
 .marscode/
+collected_data_20251223_184342/
+model/*

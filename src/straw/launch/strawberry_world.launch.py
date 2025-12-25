@@ -27,7 +27,7 @@ def generate_launch_description():
             '/camera/rgb/image_raw@sensor_msgs/msg/Image@ignition.msgs.Image',
             '/camera/depth/image_raw@sensor_msgs/msg/Image@ignition.msgs.Image',
             '/camera/rgb/camera_info@sensor_msgs/msg/CameraInfo@ignition.msgs.CameraInfo',
-            '/camera/depth/camera_info@sensor_msgs/msg/CameraInfo@ignition.msgs.CameraInfo'
+            '/camera/depth/camera_info@sensor_msgs/msg/CameraInfo@ignition.msgs.CameraInfo',
         ],
         output='screen'
     )
