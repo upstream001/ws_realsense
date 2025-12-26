@@ -4,8 +4,8 @@ import os
 
 # 1. 加载 npy 深度文件
 # 注意：这里使用的是您刚才生成的最新文件，如果文件名变了请手动更新
-depth_path = "/home/tianqi/ws_realsense/captured_images/rgb_20251225_161918.npy"
-rgb_path = "/home/tianqi/ws_realsense/captured_images/rgb_20251225_161918.jpg"
+depth_path = "/home/tianqi/ws_realsense/collected_data_20251225_174027/depth_005.npy"
+rgb_path = "/home/tianqi/ws_realsense/collected_data_20251225_174027/rgb_005.jpg"
 
 if not os.path.exists(depth_path):
     print(f"错误: 找不到文件 {depth_path}")
@@ -67,6 +67,22 @@ if len(pcd.points) > 500:
     print(f"下采样完成，当前点数: {len(pcd.points)}")
 else:
     print(f"点数少于 500 ({len(pcd.points)})，跳过下采样")
+
+before_normalization_points = np.asarray(pcd.points)
+distances = np.linalg.norm(before_normalization_points, axis=1)
+max_distance = np.max(distances)
+normalized_points = before_normalization_points / max_distance
+transform_info = {
+    "max_distance": max_distance,
+    "scale_factor": 1.0 / max_distance if max_distance > 0 else 1.0,
+}
+print(f"点云最大距离: {max_distance} m, 归一化因子: {transform_info['scale_factor']}")
+
+pcd.points = o3d.utility.Vector3dVector(normalized_points)
+
+pcd, ind = pcd.remove_statistical_outlier(nb_neighbors=20, std_ratio=2.0)
+pcd = pcd.select_by_index(ind)
+
 
 # 计算平均深度 (cm)
 points = np.asarray(pcd.points)

@@ -29,7 +29,6 @@ setup(
     tests_require=["pytest"],
     entry_points={
         "console_scripts": [
-            "straw_node = straw.straw_node:main",
             "camera_viewer = straw.camera_viewer:main",
             "simple_image_capture = straw.simple_image_capture:main",
             "test_image_topics = straw.test_image_topics:main",
