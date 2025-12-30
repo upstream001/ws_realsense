@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 """
 获取相机当前位置的脚本
