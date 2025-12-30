@@ -100,7 +100,7 @@
                     <geometry>
                         <mesh>
                             <uri>
-                                file:///home/tianqi/ws_realsense/src/straw/models/strawberry/meshes/2025.12.25.dae</uri>
+                                file:///home/tianqi/ws_realsense/src/straw/models/strawberry/meshes/strawberry_no_leaves.dae</uri>
                             <scale>1 1 1</scale>
                         </mesh>
                     </geometry>
@@ -109,7 +109,7 @@
                     <geometry>
                         <mesh>
                             <uri>
-                                file:///home/tianqi/ws_realsense/src/straw/models/strawberry/meshes/2025.12.25.dae</uri>
+                                file:///home/tianqi/ws_realsense/src/straw/models/strawberry/meshes/strawberry_no_leaves.dae</uri>
                             <scale>1 1 1</scale>
                         </mesh>
                     </geometry>
