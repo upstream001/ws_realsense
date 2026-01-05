@@ -1,3 +1,4 @@
+#可视化两个点云做对比
 import open3d as o3d
 import argparse
 import numpy as np
@@ -100,13 +101,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="PoinTr 项目点云对比可视化脚本")
     parser.add_argument(
         "--file1",
-        default="/home/tianqi/ws_realsense/complete.ply",
+        default="/home/tianqi/ws_realsense/partial_v2_processed/000.ply",
         type=str,
         help="第一个点云文件路径 (.ply, .pcd, .npy)",
     )
     parser.add_argument(
         "--file2",
-        default="/home/tianqi/ws_realsense/collected_data_20251225_174859/depth_000.npy",
+        default="/home/tianqi/ws_realsense/complete_no_leave.ply",
         type=str,
         help="第二个点云文件路径 (.ply, .pcd, .npy)",
     )

@@ -51,7 +51,7 @@
         <!-- 2. 草莓模型 -->
         <model name="strawberry">
             <static>true</static>
-            <pose>0 0 0.1 0 0 0</pose>
+            <pose>0 0 0 0 0 0</pose>
             <link name="strawberry_link">
                 <visual name="strawberry_visual">
                     <geometry>
@@ -75,7 +75,7 @@
         <!-- 3. RealSense D405 相机模型 -->
         <model name="realsense_d405">
             <static>true</static>
-            <pose>3 0 0.1 0 0 3.14159</pose>
+            <pose>3 0 0 0 0 3.14159</pose>
             
             <!-- 相机主体 -->
             <link name="camera_link">

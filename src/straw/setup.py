@@ -35,6 +35,7 @@ setup(
             "move_camera_command = straw.move_camera_command:main",
             "get_camera_position = straw.get_camera_position:main",
             "rotate_capture = straw.rotate_capture:main",
+            "get_relative_pose=straw.get_relative_pose:main"
         ],
     },
 )
